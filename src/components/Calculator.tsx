@@ -4,17 +4,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 function Calculator() {
   return (
     <div className="calculator">
-      <div className="input-group flex items-center gap-4 mb-4">
-        <label htmlFor="horizon-value" className="w-1/3">Task Horizon:</label>
+      <div className="input-group flex justify-items-start items-center gap-4 mb-4">
+        <label htmlFor="horizon-value" className="w-2xs text-left">How long will you keep doing it?</label>
         <input
           id="horizon-value"
           type="number"
           min="1"
-          placeholder="Enter a positive number"
-          className="input border rounded px-2 py-1 w-1/3"
+          placeholder="1"
+          className="input border rounded px-2 py-1 w-32"
         />
         <Select>
-          <SelectTrigger className="w-1/3 border rounded px-2 py-1">
+          <SelectTrigger className="w-44 border rounded px-2 py-1">
             <SelectValue placeholder="Unit" />
           </SelectTrigger>
           <SelectContent>
@@ -26,17 +26,17 @@ function Calculator() {
         </Select>
       </div>
 
-      <div className="input-group flex items-center gap-4 mb-4">
-        <label htmlFor="frequency-value" className="w-1/3">How Often You Do the Task:</label>
+      <div className="input-group flex justify-items-start items-center gap-4 mb-4">
+        <label htmlFor="frequency-value" className="w-2xs text-left">How often do you do it?</label>
         <input
           id="frequency-value"
           type="number"
           min="1"
-          placeholder="Enter a positive number"
-          className="input border rounded px-2 py-1 w-1/3"
+          placeholder="1"
+          className="input border rounded px-2 py-1 w-32"
         />
         <Select>
-          <SelectTrigger className="w-1/3 border rounded px-2 py-1">
+          <SelectTrigger className="w-44 border rounded px-2 py-1">
             <SelectValue placeholder="Unit" />
           </SelectTrigger>
           <SelectContent>
@@ -49,14 +49,25 @@ function Calculator() {
       </div>
 
       <div className="input-group flex items-center gap-4 mb-4">
-        <label htmlFor="task-duration" className="w-1/3">Task Duration:</label>
+      <label htmlFor="task-duriation" className="w-2xs text-left">How long does it take?</label>
         <input
           id="task-duration"
           type="number"
           min="1"
-          placeholder="Enter time in minutes"
-          className="input border rounded px-2 py-1 w-2/3"
+          placeholder="15"
+          className="input border rounded px-2 py-1 w-32"
         />
+        <Select>
+          <SelectTrigger className="w-44 border rounded px-2 py-1">
+            <SelectValue placeholder="Unit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="second">Seconds</SelectItem>
+            <SelectItem value="minute">Minutes</SelectItem>
+            <SelectItem value="hour">Hours</SelectItem>
+            <SelectItem value="day">Days</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <div className="flex items-right justify-end gap-4 mb-4">
         <Button variant="outline">Calculate</Button>
