@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
-import { TimeCalculationInput, HorizonUnit, FrequencyUnit, TaskDurationUnit } from "./TimeCalculationInput";
+import { TimeCalculationInput, TimeUnit } from "./TimeCalculationInput";
 
 function Calculator() {
   const [timeCalculationInput, setTimeCalculationInput] = useState<TimeCalculationInput>({
     horizonValue: 1,
-    horizonUnit: HorizonUnit.Days,
+    horizonUnit: TimeUnit.Day,
     frequencyValue: 1,
-    frequencyUnit: FrequencyUnit.PerDay,
+    frequencyUnit: TimeUnit.Day,
     taskDuration: 1,
-    taskDurationUnit: TaskDurationUnit.Minutes,
+    taskDurationUnit: TimeUnit.Minute,
   });
 
   const handleInputChange = (field: keyof TimeCalculationInput, value: string | number) => {
@@ -38,17 +38,17 @@ function Calculator() {
           onChange={(e) => handleInputChange("horizonValue", e.target.value)}
         />
         <Select
-          onValueChange={(value) => handleInputChange("horizonUnit", value as HorizonUnit)}
+          onValueChange={(value) => handleInputChange("horizonUnit", value as TimeUnit)}
           value={timeCalculationInput.horizonUnit}
         >
           <SelectTrigger className="w-44 border rounded px-2 py-1">
             <SelectValue placeholder="Unit" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={HorizonUnit.Days}>Days</SelectItem>
-            <SelectItem value={HorizonUnit.Weeks}>Weeks</SelectItem>
-            <SelectItem value={HorizonUnit.Months}>Months</SelectItem>
-            <SelectItem value={HorizonUnit.Years}>Years</SelectItem>
+            <SelectItem value={TimeUnit.Day}>Days</SelectItem>
+            <SelectItem value={TimeUnit.Week}>Weeks</SelectItem>
+            <SelectItem value={TimeUnit.Month}>Months</SelectItem>
+            <SelectItem value={TimeUnit.Year}>Years</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -65,17 +65,17 @@ function Calculator() {
           onChange={(e) => handleInputChange("frequencyValue", e.target.value)}
         />
         <Select
-          onValueChange={(value) => handleInputChange("frequencyUnit", value as FrequencyUnit)}
+          onValueChange={(value) => handleInputChange("frequencyUnit", value as TimeUnit)}
           value={timeCalculationInput.frequencyUnit}
         >
           <SelectTrigger className="w-44 border rounded px-2 py-1">
             <SelectValue placeholder="Unit" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={FrequencyUnit.PerDay}>Per Day</SelectItem>
-            <SelectItem value={FrequencyUnit.PerWeek}>Per Week</SelectItem>
-            <SelectItem value={FrequencyUnit.PerMonth}>Per Month</SelectItem>
-            <SelectItem value={FrequencyUnit.PerYear}>Per Year</SelectItem>
+            <SelectItem value={TimeUnit.Day}>Per Day</SelectItem>
+            <SelectItem value={TimeUnit.Week}>Per Week</SelectItem>
+            <SelectItem value={TimeUnit.Month}>Per Month</SelectItem>
+            <SelectItem value={TimeUnit.Year}>Per Year</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -92,17 +92,16 @@ function Calculator() {
           onChange={(e) => handleInputChange("taskDuration", e.target.value)}
         />
         <Select
-          onValueChange={(value) => handleInputChange("taskDurationUnit", value as TaskDurationUnit)}
+          onValueChange={(value) => handleInputChange("taskDurationUnit", value as TimeUnit)}
           value={timeCalculationInput.taskDurationUnit}
         >
           <SelectTrigger className="w-44 border rounded px-2 py-1">
             <SelectValue placeholder="Unit" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={TaskDurationUnit.Seconds}>Seconds</SelectItem>
-            <SelectItem value={TaskDurationUnit.Minutes}>Minutes</SelectItem>
-            <SelectItem value={TaskDurationUnit.Hours}>Hours</SelectItem>
-            <SelectItem value={TaskDurationUnit.Days}>Days</SelectItem>
+            <SelectItem value={TimeUnit.Second}>Seconds</SelectItem>
+            <SelectItem value={TimeUnit.Minute}>Minutes</SelectItem>
+            <SelectItem value={TimeUnit.Hour}>Hours</SelectItem>
           </SelectContent>
         </Select>
       </div>

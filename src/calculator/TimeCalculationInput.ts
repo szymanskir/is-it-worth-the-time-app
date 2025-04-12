@@ -1,29 +1,19 @@
-export enum HorizonUnit {
-  Days = "days",
-  Weeks = "weeks",
-  Months = "months",
-  Years = "years",
+export enum TimeUnit {
+  Second = "second",
+  Minute = "minute",
+  Hour = "hour",
+  Day = "day",
+  Week = "week",
+  Month = "month",
+  Year = "year",
 }
 
-export enum FrequencyUnit {
-  PerDay = "day",
-  PerWeek = "week",
-  PerMonth = "month",
-  PerYear = "year",
-}
-
-export enum TaskDurationUnit {
-  Seconds = "second",
-  Minutes = "minute",
-  Hours = "hour",
-  Days = "day",
-}
 
 export type TimeCalculationInput = {
   horizonValue: number;
-  horizonUnit: HorizonUnit;
+  horizonUnit: TimeUnit;
   frequencyValue: number;
-  frequencyUnit: FrequencyUnit;
+  frequencyUnit: TimeUnit;
   taskDuration: number;
-  taskDurationUnit: TaskDurationUnit;
+  taskDurationUnit: TimeUnit;
 };

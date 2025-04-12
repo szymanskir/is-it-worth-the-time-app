@@ -1,57 +1,25 @@
 import { describe, it, expect } from 'vitest';
-import { FrequencyUnit, HorizonUnit, TaskDurationUnit } from './TimeCalculationInput';
+import { TimeCalculationInput, TimeUnit } from './TimeCalculationInput';
 import { calculatePotentialSavedTime } from './calculations';
 
+
+type CalculationScenario = TimeCalculationInput & {
+    expected: number;
+};
+
+
 describe('calculatePotentialSavedTime', () => {
-    it("should return 0 if task takes 0 time", () => {
-        const input = {
-            horizonValue: 1,
-            horizonUnit: HorizonUnit.Days,
-            frequencyValue: 1,
-            frequencyUnit: FrequencyUnit.PerDay,
-            taskDuration: 0,
-            taskDurationUnit: TaskDurationUnit.Seconds
-        };
-        const result = calculatePotentialSavedTime(input);
-        expect(result).toBe(0);
-    })
-
-    it("should return the task duration if it will be performed only once", () => {
-        const input = {
-            horizonValue: 1,
-            horizonUnit: HorizonUnit.Days,
-            frequencyValue: 1,
-            frequencyUnit: FrequencyUnit.PerDay,
-            taskDuration: 30,
-            taskDurationUnit: TaskDurationUnit.Seconds
-        };
-        const result = calculatePotentialSavedTime(input);
-        expect(result).toBe(30);
-    })
-
-    it("should return results in seconds", () => {
-        const input = {
-            horizonValue: 1,
-            horizonUnit: HorizonUnit.Days,
-            frequencyValue: 1,
-            frequencyUnit: FrequencyUnit.PerDay,
-            taskDuration: 1,
-            taskDurationUnit: TaskDurationUnit.Minutes
-        };
-        const result = calculatePotentialSavedTime(input);
-        expect(result).toBe(60);
-    })
-
-    it("should return 5 minutes for a 1 minute task done every day for 5 days", () => {
-        const input = {
-            horizonValue: 5,
-            horizonUnit: HorizonUnit.Days,
-            frequencyValue: 1,
-            frequencyUnit: FrequencyUnit.PerDay,
-            taskDuration: 1,
-            taskDurationUnit: TaskDurationUnit.Minutes
-        };
-        const result = calculatePotentialSavedTime(input);
-        expect(result).toBe(300);
-    })
+    it.each`
+        horizonValue | horizonUnit     | frequencyValue | frequencyUnit     | taskDuration | taskDurationUnit   | expected
+        ${1}         | ${TimeUnit.Day} | ${1}           | ${TimeUnit.Day}   | ${0}         | ${TimeUnit.Minute} | ${0}
+        ${1}         | ${TimeUnit.Day} | ${1}           | ${TimeUnit.Day}   | ${30}        | ${TimeUnit.Second} | ${30}
+        ${1}         | ${TimeUnit.Day} | ${1}           | ${TimeUnit.Day}   | ${1}         | ${TimeUnit.Minute} | ${60}
+        ${5}         | ${TimeUnit.Day} | ${1}           | ${TimeUnit.Day}   | ${1}         | ${TimeUnit.Minute} | ${300}
+        ${14}        | ${TimeUnit.Day} | ${2}           | ${TimeUnit.Week}  | ${1}         | ${TimeUnit.Minute} | ${240}
+    `(`should return $expected seconds for a $taskDuration $taskDurationUnit 
+        task done $frequencyValue per $frequencyUnit for $horizonValue $horizonUnit`, (calculationScenario : CalculationScenario) => {
+        const { expected, ...calculationInput  } = calculationScenario;
+        const result = calculatePotentialSavedTime(calculationInput);
+        expect(result).toBe(expected);
+    });
 });
