@@ -38,8 +38,9 @@ function taskDurationtoDuration(taskDurationValue: number, taskDurationUnit: Tim
 }
 
 
-export function calculatePotentialSavedTime(calculationInput: TimeCalculationInput): number {
+export function calculatePotentialSavedTime(calculationInput: TimeCalculationInput, outputUnit: TimeUnit = TimeUnit.Second): number {
     const horizonInFrequencyUnits = calculationInput.horizonValue * getTimeUnitMultiplier(calculationInput.horizonUnit, calculationInput.frequencyUnit);
     const taskOccurenceCount = horizonInFrequencyUnits * calculationInput.frequencyValue;
-    return Math.trunc(taskDurationtoDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as("seconds") * taskOccurenceCount);
+    const taskDurationInResultUnits = taskDurationtoDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(outputUnit)
+    return Math.trunc(taskDurationInResultUnits * taskOccurenceCount);
 }

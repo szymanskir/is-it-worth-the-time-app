@@ -1,11 +1,11 @@
 export enum TimeUnit {
-  Second = "second",
-  Minute = "minute",
-  Hour = "hour",
-  Day = "day",
-  Week = "week",
-  Month = "month",
-  Year = "year",
+  Second = "seconds",
+  Minute = "minutes",
+  Hour = "hours",
+  Day = "days",
+  Week = "weeks",
+  Month = "months",
+  Year = "years",
 }
 
 
