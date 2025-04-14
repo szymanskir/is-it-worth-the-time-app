@@ -1,46 +1,31 @@
 import { TimeCalculationInput, TimeUnit } from "./TimeCalculationInput";
 import { Duration } from "luxon";
 
-function getTimeUnitMultiplier(from: TimeUnit, to: TimeUnit): number {
-    const timeUnitInDays: Record<TimeUnit, number> = {
-        [TimeUnit.Second]: 1 / (3600 * 24),
-        [TimeUnit.Minute]: 1 / (60 * 24),
-        [TimeUnit.Hour]: 1 / 24,
-        [TimeUnit.Day]: 1,
-        [TimeUnit.Week]: 7,
-        [TimeUnit.Month]: 30,
-        [TimeUnit.Year]: 365
-    };
-
-    const fromInDays = timeUnitInDays[from];
-    const toInDays = timeUnitInDays[to];
-
-    if (fromInDays === undefined || toInDays === undefined) {
-        throw new Error(`Unknown time unit: from=${from}, to=${to}`);
-    }
-
-    return (fromInDays / toInDays);
-}
-
-function taskDurationtoDuration(taskDurationValue: number, taskDurationUnit: TimeUnit): Duration {
-    switch(taskDurationUnit) {
+function formDurationToLuxonDuration(formDurationValue: number, formDurationUnit: TimeUnit): Duration {
+    switch(formDurationUnit) {
         case TimeUnit.Second:
-            return Duration.fromObject({ seconds: taskDurationValue });
+            return Duration.fromObject({ seconds: formDurationValue });
         case TimeUnit.Minute:
-            return Duration.fromObject({ minutes: taskDurationValue });
+            return Duration.fromObject({ minutes: formDurationValue });
         case TimeUnit.Hour:   
-            return Duration.fromObject({ hours: taskDurationValue });
+            return Duration.fromObject({ hours: formDurationValue });
         case TimeUnit.Day:
-            return Duration.fromObject({ days: taskDurationValue });
+            return Duration.fromObject({ days: formDurationValue });
+        case TimeUnit.Week:
+            return Duration.fromObject({ weeks: formDurationValue });
+        case TimeUnit.Month:
+            return Duration.fromObject({ months: formDurationValue });
+        case TimeUnit.Year:
+            return Duration.fromObject({ years: formDurationValue });
         default:
-            throw new Error(`Unknown task duration unit: ${taskDurationUnit}`)
+            throw new Error(`Unknown task duration unit: ${formDurationUnit}`)
     }
 }
 
 
 export function calculatePotentialSavedTime(calculationInput: TimeCalculationInput, outputUnit: TimeUnit = TimeUnit.Second): number {
-    const horizonInFrequencyUnits = calculationInput.horizonValue * getTimeUnitMultiplier(calculationInput.horizonUnit, calculationInput.frequencyUnit);
+    const horizonInFrequencyUnits = formDurationToLuxonDuration(calculationInput.horizonValue, calculationInput.horizonUnit).as(calculationInput.frequencyUnit);
     const taskOccurenceCount = horizonInFrequencyUnits * calculationInput.frequencyValue;
-    const taskDurationInResultUnits = taskDurationtoDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(outputUnit)
+    const taskDurationInResultUnits = formDurationToLuxonDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(outputUnit)
     return Math.trunc(taskDurationInResultUnits * taskOccurenceCount);
 }
