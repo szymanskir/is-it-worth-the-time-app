@@ -38,14 +38,47 @@ describe('calculatePotentialSavedTime', () => {
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${5}         | ${TimeUnit.Second}  | ${5}                 | ${TimeUnit.Minute}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${5}         | ${TimeUnit.Second}  | ${25}                | ${TimeUnit.Second}
 
+        // In test case 3 we have 15 hours instead of 12
         ${5}         | ${TimeUnit.Year} | ${50}          | ${TimeUnit.Day}    | ${30}        | ${TimeUnit.Second}  | ${4}                 | ${TimeUnit.Week}
         ${5}         | ${TimeUnit.Year} | ${5}           | ${TimeUnit.Day}    | ${30}        | ${TimeUnit.Second}  | ${3}                 | ${TimeUnit.Day}
-        // Skipped (to be analyzed)
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Day}    | ${30}        | ${TimeUnit.Second}  | ${15}                | ${TimeUnit.Hour}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Week}   | ${30}        | ${TimeUnit.Second}  | ${2}                 | ${TimeUnit.Hour}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${30}        | ${TimeUnit.Second}  | ${30}                | ${TimeUnit.Minute}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${30}        | ${TimeUnit.Second}  | ${2}                 | ${TimeUnit.Minute}
 
+        // Here in test case 1 we have 9 weeks intead of 8
+        ${5}         | ${TimeUnit.Year} | ${50}          | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Minute}  | ${9}                 | ${TimeUnit.Week}
+        ${5}         | ${TimeUnit.Year} | ${5}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Minute}  | ${6}                 | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Minute}  | ${1}                 | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Week}   | ${1}         | ${TimeUnit.Minute}  | ${4}                 | ${TimeUnit.Hour}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${1}         | ${TimeUnit.Minute}  | ${1}                 | ${TimeUnit.Hour}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${1}         | ${TimeUnit.Minute}  | ${5}                 | ${TimeUnit.Minute}
+
+        // Here in test case 1 we have 10 months instead of 9
+        ${5}         | ${TimeUnit.Year} | ${50}          | ${TimeUnit.Day}    | ${5}         | ${TimeUnit.Minute}  | ${10}                | ${TimeUnit.Month}
+        ${5}         | ${TimeUnit.Year} | ${5}           | ${TimeUnit.Day}    | ${5}         | ${TimeUnit.Minute}  | ${4}                 | ${TimeUnit.Week}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Day}    | ${5}         | ${TimeUnit.Minute}  | ${6}                 | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Week}   | ${5}         | ${TimeUnit.Minute}  | ${21}                | ${TimeUnit.Hour}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${5}         | ${TimeUnit.Minute}  | ${5}                 | ${TimeUnit.Hour}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${5}         | ${TimeUnit.Minute}  | ${25}                | ${TimeUnit.Minute}
+
+        ${5}         | ${TimeUnit.Year} | ${5}           | ${TimeUnit.Day}    | ${30}        | ${TimeUnit.Minute}  | ${6}                 | ${TimeUnit.Month}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Day}    | ${30}        | ${TimeUnit.Minute}  | ${5}                 | ${TimeUnit.Week}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Week}   | ${30}        | ${TimeUnit.Minute}  | ${5}                 | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${30}        | ${TimeUnit.Minute}  | ${1}                 | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${30}        | ${TimeUnit.Minute}  | ${2}                 | ${TimeUnit.Hour}
+
+        // Here in test case 1 we have 12 months instead of 10
+        ${5}         | ${TimeUnit.Year} | ${5}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Hour}    | ${12}                | ${TimeUnit.Month}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Hour}    | ${2}                 | ${TimeUnit.Month}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Week}   | ${1}         | ${TimeUnit.Hour}    | ${10}                | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${1}         | ${TimeUnit.Hour}    | ${2}                 | ${TimeUnit.Day}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${1}         | ${TimeUnit.Hour}    | ${5}                 | ${TimeUnit.Hour}
+
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Week}   | ${6}         | ${TimeUnit.Hour}    | ${2}                 | ${TimeUnit.Month}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${6}         | ${TimeUnit.Hour}    | ${2}                 | ${TimeUnit.Week}
+        ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${6}         | ${TimeUnit.Hour}    | ${1}                 | ${TimeUnit.Day}
+
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${1}         | ${TimeUnit.Day}     | ${8}                 | ${TimeUnit.Week}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${1}         | ${TimeUnit.Day}     | ${5}                 | ${TimeUnit.Day}
     `(`should return $expected $expectedUnit for a $taskDuration $taskDurationUnit 
