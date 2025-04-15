@@ -22,10 +22,23 @@ function formDurationToLuxonDuration(formDurationValue: number, formDurationUnit
     }
 }
 
+function isTaskDurationAchievableForFrequency(calculationInput: TimeCalculationInput): boolean {
+    const taskDurationInFrequencyUnits = formDurationToLuxonDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(calculationInput.frequencyUnit);
+    return taskDurationInFrequencyUnits * calculationInput.frequencyValue <= 1;
+}
+
+function assertTimeCalculationInput(calculationInput: TimeCalculationInput): void {
+    if (!isTaskDurationAchievableForFrequency(calculationInput)) {
+        throw new Error("The task duration is impossible for the given frequency.");
+    }
+}
 
 export function calculatePotentialSavedTime(calculationInput: TimeCalculationInput, outputUnit: TimeUnit = TimeUnit.Second): number {
+    assertTimeCalculationInput(calculationInput);
+
     const horizonInFrequencyUnits = formDurationToLuxonDuration(calculationInput.horizonValue, calculationInput.horizonUnit).as(calculationInput.frequencyUnit);
     const taskOccurenceCount = horizonInFrequencyUnits * calculationInput.frequencyValue;
-    const taskDurationInResultUnits = formDurationToLuxonDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(outputUnit)
+    const taskDurationInResultUnits = formDurationToLuxonDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(outputUnit);
+
     return Math.trunc(taskDurationInResultUnits * taskOccurenceCount);
 }
