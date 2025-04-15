@@ -87,4 +87,16 @@ describe('calculatePotentialSavedTime', () => {
         const result = calculatePotentialSavedTime(calculationInput, expectedUnit);
         expect(result).toBe(expected);
     });
+
+    it("should throw an error if the task duration and frequency are impossible", () => {
+        const calculationInput: TimeCalculationInput = {
+            taskDuration: 6,
+            taskDurationUnit: TimeUnit.Hour,
+            frequencyValue: 5,
+            frequencyUnit: TimeUnit.Day,
+            horizonValue: 5,
+            horizonUnit: TimeUnit.Year
+        };
+        expect(() => calculatePotentialSavedTime(calculationInput)).toThrowError("The task duration is impossible for the given frequency.");
+    });
 });
