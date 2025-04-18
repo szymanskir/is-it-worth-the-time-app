@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { TimeCalculationInput, TimeUnit } from "./TimeCalculationInput";
 import { calculatePotentialSavedTime } from "./calculations";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 function Calculator() {
   const [timeCalculationInput, setTimeCalculationInput] = useState<TimeCalculationInput>({
@@ -14,8 +15,6 @@ function Calculator() {
     taskDurationUnit: TimeUnit.Minute,
   });
 
-  const [timeSavingResult, setTimeSavingResult] = useState<number | null>(calculatePotentialSavedTime(timeCalculationInput, TimeUnit.Day));
-
   const handleInputChange = (field: keyof TimeCalculationInput, value: string | number) => {
     setTimeCalculationInput((prev) => ({
       ...prev,
@@ -26,8 +25,8 @@ function Calculator() {
 
   return (
     <div className="calculator flex flex-col items-center gap-6">
-      <div className="card border rounded shadow p-6">
-        <div className="card-body">
+      <Card className="w-[390px]">
+        <CardContent>
           <div className="input-group flex justify-items-start items-center gap-4 mb-4">
             <div className="flex flex-col items-start">
               <label htmlFor="horizon-value" className="mb-1 text-left font-semibold">How long will you keep doing it?</label>
@@ -120,18 +119,19 @@ function Calculator() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className="card border rounded shadow p-4 w-64">
-        <div className="card-header text-lg font-bold">Time Saved</div>
-        <div className="card-body text-center text-2xl font-semibold">
-          {`${calculatePotentialSavedTime(timeCalculationInput, TimeUnit.Day)} ${TimeUnit.Day}`}
-          <div className="text-sm text-gray-500 mt-2">
-            over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s).
-          </div>
-        </div>
-      </div>
+      <Card className="w-[390px]">
+        <CardContent>
+          <p className="text-2xl font-semibold">
+            {`${calculatePotentialSavedTime(timeCalculationInput, TimeUnit.Day)} ${TimeUnit.Day}`}
+          </p>
+          <p className="text-gray-500 mt-1">
+            saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s).
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }
