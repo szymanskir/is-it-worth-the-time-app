@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button } from "../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { TimeCalculationInput, TimeUnit } from "./TimeCalculationInput";
 import { calculatePotentialSavedTime } from "./calculations";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 function Calculator() {
   const [timeCalculationInput, setTimeCalculationInput] = useState<TimeCalculationInput>({
@@ -14,6 +13,17 @@ function Calculator() {
     taskDuration: 15,
     taskDurationUnit: TimeUnit.Minute,
   });
+
+  const [savedTimeResult, setSavedTimeResult] = useState<number>(0);
+
+  useEffect(() => {
+    try {
+      const result = calculatePotentialSavedTime(timeCalculationInput, TimeUnit.Day);
+      setSavedTimeResult(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [timeCalculationInput]);
 
   const handleInputChange = (field: keyof TimeCalculationInput, value: string | number) => {
     setTimeCalculationInput((prev) => ({
@@ -125,7 +135,7 @@ function Calculator() {
       <Card className="w-[390px]">
         <CardContent>
           <p className="text-2xl font-semibold">
-            {`${calculatePotentialSavedTime(timeCalculationInput, TimeUnit.Day)} ${TimeUnit.Day}`}
+            {`${savedTimeResult} ${TimeUnit.Day}`}
           </p>
           <p className="text-gray-500 mt-1">
             saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s).
