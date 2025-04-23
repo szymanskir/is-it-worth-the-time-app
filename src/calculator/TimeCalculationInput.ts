@@ -16,4 +16,5 @@ export type TimeCalculationInput = {
   frequencyUnit: TimeUnit;
   taskDuration: number;
   taskDurationUnit: TimeUnit;
+  resultUnit: TimeUnit;
 };

@@ -33,12 +33,12 @@ function assertTimeCalculationInput(calculationInput: TimeCalculationInput): voi
     }
 }
 
-export function calculatePotentialSavedTime(calculationInput: TimeCalculationInput, outputUnit: TimeUnit = TimeUnit.Second): number {
+export function calculatePotentialSavedTime(calculationInput: TimeCalculationInput): number {
     assertTimeCalculationInput(calculationInput);
 
     const horizonInFrequencyUnits = formDurationToLuxonDuration(calculationInput.horizonValue, calculationInput.horizonUnit).as(calculationInput.frequencyUnit);
     const taskOccurenceCount = horizonInFrequencyUnits * calculationInput.frequencyValue;
-    const taskDurationInResultUnits = formDurationToLuxonDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(outputUnit);
+    const taskDurationInResultUnits = formDurationToLuxonDuration(calculationInput.taskDuration, calculationInput.taskDurationUnit).as(calculationInput.resultUnit);
 
     return Math.trunc(taskDurationInResultUnits * taskOccurenceCount);
 }
