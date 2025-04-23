@@ -12,13 +12,14 @@ function Calculator() {
     frequencyUnit: TimeUnit.Day,
     taskDuration: 15,
     taskDurationUnit: TimeUnit.Minute,
+    resultUnit: TimeUnit.Day
   });
 
   const [savedTimeResult, setSavedTimeResult] = useState<number>(0);
 
   useEffect(() => {
     try {
-      const result = calculatePotentialSavedTime(timeCalculationInput, TimeUnit.Day);
+      const result = calculatePotentialSavedTime(timeCalculationInput);
       setSavedTimeResult(result);
     } catch (error) {
       console.log(error);
@@ -129,16 +130,42 @@ function Calculator() {
               </div>
             </div>
           </div>
+
+          <div className="input-group flex items-center gap-4 mb-4">
+            <div className="flex flex-col items-start">
+              <label htmlFor="task-duration" className="mb-1 text-left font-semibold">In what units do you want to see results?</label>
+              <div className="flex items-center gap-4">
+
+                <Select
+                  onValueChange={(value) => handleInputChange("resultUnit", value as TimeUnit)}
+                  value={timeCalculationInput.resultUnit}
+                >
+                  <SelectTrigger className="w-80 border rounded px-2 py-1">
+                    <SelectValue placeholder="Unit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={TimeUnit.Second}>Seconds</SelectItem>
+                    <SelectItem value={TimeUnit.Minute}>Minutes</SelectItem>
+                    <SelectItem value={TimeUnit.Hour}>Hours</SelectItem>
+                    <SelectItem value={TimeUnit.Day}>Days</SelectItem>
+                    <SelectItem value={TimeUnit.Week}>Weeks</SelectItem>
+                    <SelectItem value={TimeUnit.Month}>Months</SelectItem>
+                    <SelectItem value={TimeUnit.Year}>Years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
       <Card className="w-[390px]">
         <CardContent>
           <p className="text-2xl font-semibold">
-            {`${savedTimeResult} ${TimeUnit.Day}`}
+            {`${savedTimeResult.toLocaleString()} ${timeCalculationInput.resultUnit}`}
           </p>
           <p className="text-gray-500 mt-1">
-            saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s).
+            saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s)
           </p>
         </CardContent>
       </Card>
