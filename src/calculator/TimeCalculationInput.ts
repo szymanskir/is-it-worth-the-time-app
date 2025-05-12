@@ -17,4 +17,6 @@ export type TimeCalculationInput = {
   taskDuration: number;
   taskDurationUnit: TimeUnit;
   resultUnit: TimeUnit;
+  timeToAutomate: number;
+  timeToAutomateUnit: TimeUnit;
 };

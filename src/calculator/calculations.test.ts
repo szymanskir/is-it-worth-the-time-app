@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { TimeCalculationInput, TimeUnit } from './TimeCalculationInput';
-import { calculatePotentialSavedTime } from './calculations';
+import { calculateBreakEvenTime, calculatePotentialSavedTime } from './calculations';
 
 
 type CalculationScenario = TimeCalculationInput & {
@@ -96,8 +96,24 @@ describe('calculatePotentialSavedTime', () => {
             frequencyUnit: TimeUnit.Day,
             horizonValue: 5,
             horizonUnit: TimeUnit.Year,
-            resultUnit: TimeUnit.Day
+            resultUnit: TimeUnit.Day,
+            timeToAutomate: 0,
+            timeToAutomateUnit: TimeUnit.Second
         };
         expect(() => calculatePotentialSavedTime(calculationInput)).toThrowError("The task duration is impossible for the given frequency.");
+    });
+
+});
+
+
+describe('calculatePotentialSavedTime', () => {
+    it.each`
+        frequencyValue | frequencyUnit      | taskDuration | taskDurationUnit    | timeToAutomate | timeToAutomateUnit | expected             | resultUnit
+        ${1}           | ${TimeUnit.Week}   | ${15}        | ${TimeUnit.Minute}  | ${1}           | ${TimeUnit.Hour}   | ${4}                 | ${TimeUnit.Week}
+    `(`should return $expected $expectedUnit for a $taskDuration $taskDurationUnit 
+        task done $frequencyValue per $frequencyUnit for $horizonValue $horizonUnit`, (calculationScenario: CalculationScenario) => {
+        const { expected, ...calculationInput } = calculationScenario;
+        const result = calculateBreakEvenTime(calculationInput);
+        expect(result).toBe(expected);
     });
 });
