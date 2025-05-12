@@ -42,3 +42,11 @@ export function calculatePotentialSavedTime(calculationInput: TimeCalculationInp
 
     return Math.trunc(taskDurationInResultUnits * taskOccurenceCount);
 }
+
+export function calculateBreakEvenTime(calculationInput: TimeCalculationInput): number {
+    const automationTimeInTaskDurationUnits = formDurationToLuxonDuration(calculationInput.timeToAutomate, calculationInput.timeToAutomateUnit).as(calculationInput.taskDurationUnit);
+    const occurencesToBreakEven = automationTimeInTaskDurationUnits / calculationInput.taskDuration;
+    const frequencyCycles = occurencesToBreakEven / calculationInput.frequencyValue;
+
+    return Math.trunc(frequencyCycles);
+}
