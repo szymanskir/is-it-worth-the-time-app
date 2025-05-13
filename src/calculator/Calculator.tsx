@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TimeCalculationInput, TimeUnit } from "./TimeCalculationInput";
-import { calculatePotentialSavedTime } from "./calculations";
+import { calculateBreakEvenTime, calculatePotentialSavedTime } from "./calculations";
 import { Card, CardContent } from "@/components/ui/card";
 
 function Calculator() {
@@ -12,15 +12,21 @@ function Calculator() {
     frequencyUnit: TimeUnit.Day,
     taskDuration: 15,
     taskDurationUnit: TimeUnit.Minute,
-    resultUnit: TimeUnit.Day
+    resultUnit: TimeUnit.Day,
+    timeToAutomate: 1,
+    timeToAutomateUnit: TimeUnit.Hour,
   });
 
   const [savedTimeResult, setSavedTimeResult] = useState<number>(0);
+  const [breakEvenTime, setBreakEvenTime] = useState<number>(0);
 
   useEffect(() => {
     try {
       const result = calculatePotentialSavedTime(timeCalculationInput);
       setSavedTimeResult(result);
+
+      const breakEven = calculateBreakEvenTime(timeCalculationInput);
+      setBreakEvenTime(breakEven);
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +139,41 @@ function Calculator() {
 
           <div className="input-group flex items-center gap-4 mb-4">
             <div className="flex flex-col items-start">
-              <label htmlFor="task-duration" className="mb-1 text-left font-semibold">In what units do you want to see results?</label>
+              <label htmlFor="automation-estimate" className="mb-1 text-left font-semibold">How much effort to automate?</label>
+              <div className="flex items-center gap-4">
+
+                <input
+                  id="automation-estimate"
+                  type="number"
+                  min="1"
+                  placeholder="15"
+                  className="input border rounded px-2 py-1 w-32"
+                  value={timeCalculationInput.timeToAutomate}
+                  onChange={(e) => handleInputChange("timeToAutomate", e.target.value)}
+                />
+                <Select
+                  onValueChange={(value) => handleInputChange("timeToAutomateUnit", value as TimeUnit)}
+                  value={timeCalculationInput.timeToAutomateUnit}
+                >
+                  <SelectTrigger className="w-44 border rounded px-2 py-1">
+                    <SelectValue placeholder="Unit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={TimeUnit.Minute}>Minutes</SelectItem>
+                    <SelectItem value={TimeUnit.Hour}>Hours</SelectItem>
+                    <SelectItem value={TimeUnit.Day}>Days</SelectItem>
+                    <SelectItem value={TimeUnit.Week}>Weeks</SelectItem>
+                    <SelectItem value={TimeUnit.Month}>Months</SelectItem>
+                    <SelectItem value={TimeUnit.Year}>Years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          <div className="input-group flex items-center gap-4 mb-4">
+            <div className="flex flex-col items-start">
+              <p className="mb-1 text-left font-semibold">In what units do you want to see results?</p>
               <div className="flex items-center gap-4">
 
                 <Select
@@ -159,6 +199,7 @@ function Calculator() {
         </CardContent>
       </Card>
 
+
       <Card className="w-[390px]">
         <CardContent>
           <p className="text-2xl font-semibold">
@@ -168,7 +209,19 @@ function Calculator() {
             saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s)
           </p>
         </CardContent>
-      </Card>
+     </Card>
+      
+      <Card className="w-[390px]">
+        <CardContent>
+          <p className="text-2xl font-semibold">
+            {`${breakEvenTime} ${timeCalculationInput.frequencyUnit}`}
+          </p>
+          <p className="text-gray-500 mt-1">
+            for time investment to break even
+          </p>
+        </CardContent>
+      </Card> 
+      
     </div>
   );
 }

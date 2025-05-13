@@ -108,10 +108,12 @@ describe('calculatePotentialSavedTime', () => {
 
 describe('calculatePotentialSavedTime', () => {
     it.each`
-        frequencyValue | frequencyUnit      | taskDuration | taskDurationUnit    | timeToAutomate | timeToAutomateUnit | expected             | resultUnit
-        ${1}           | ${TimeUnit.Week}   | ${15}        | ${TimeUnit.Minute}  | ${1}           | ${TimeUnit.Hour}   | ${4}                 | ${TimeUnit.Week}
-    `(`should return $expected $expectedUnit for a $taskDuration $taskDurationUnit 
-        task done $frequencyValue per $frequencyUnit for $horizonValue $horizonUnit`, (calculationScenario: CalculationScenario) => {
+        frequencyValue | frequencyUnit      | taskDuration | taskDurationUnit    | timeToAutomate | timeToAutomateUnit | expected 
+        ${1}           | ${TimeUnit.Week}   | ${15}        | ${TimeUnit.Minute}  | ${1}           | ${TimeUnit.Hour}   | ${4}     
+        ${1}           | ${TimeUnit.Week}   | ${15}        | ${TimeUnit.Minute}  | ${15}          | ${TimeUnit.Minute} | ${1}     
+        ${1}           | ${TimeUnit.Week}   | ${15}        | ${TimeUnit.Minute}  | ${17}          | ${TimeUnit.Minute} | ${2}     
+    `(`should return $expected for a $taskDuration $taskDurationUnit task done $frequencyValue per $frequencyUnit 
+        automated in $timeToAutomate $timeToAutomateUnit`, (calculationScenario: CalculationScenario) => {
         const { expected, ...calculationInput } = calculationScenario;
         const result = calculateBreakEvenTime(calculationInput);
         expect(result).toBe(expected);
