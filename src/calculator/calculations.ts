@@ -48,5 +48,5 @@ export function calculateBreakEvenTime(calculationInput: TimeCalculationInput): 
     const occurencesToBreakEven = automationTimeInTaskDurationUnits / calculationInput.taskDuration;
     const frequencyCycles = occurencesToBreakEven / calculationInput.frequencyValue;
 
-    return Math.trunc(frequencyCycles);
+    return Math.ceil(frequencyCycles);
 }
