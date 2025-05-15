@@ -41,8 +41,8 @@ function Calculator() {
   };
 
   return (
-    <div className="calculator flex flex-col items-center gap-6">
-      <Card className="w-[390px]">
+    <div className="calculator flex flex-col items-center gap-6 w-full">
+      <Card className="w-full">
         <CardContent>
           <div className="input-group flex justify-items-start items-center gap-4 mb-4">
             <div className="flex flex-col items-start">
@@ -53,7 +53,7 @@ function Calculator() {
                   type="number"
                   min="1"
                   placeholder="1"
-                  className="input border rounded px-2 py-1 w-32"
+                  className="input border rounded px-2 py-1 w-24"
                   value={timeCalculationInput.horizonValue}
                   onChange={(e) => handleInputChange("horizonValue", e.target.value)}
                 />
@@ -84,7 +84,7 @@ function Calculator() {
                   type="number"
                   min="1"
                   placeholder="1"
-                  className="input border rounded px-2 py-1 w-32"
+                  className="input border rounded px-2 py-1 w-24"
                   value={timeCalculationInput.frequencyValue}
                   onChange={(e) => handleInputChange("frequencyValue", e.target.value)}
                 />
@@ -116,7 +116,7 @@ function Calculator() {
                   type="number"
                   min="1"
                   placeholder="15"
-                  className="input border rounded px-2 py-1 w-32"
+                  className="input border rounded px-2 py-1 w-24"
                   value={timeCalculationInput.taskDuration}
                   onChange={(e) => handleInputChange("taskDuration", e.target.value)}
                 />
@@ -147,7 +147,7 @@ function Calculator() {
                   type="number"
                   min="1"
                   placeholder="15"
-                  className="input border rounded px-2 py-1 w-32"
+                  className="input border rounded px-2 py-1 w-24"
                   value={timeCalculationInput.timeToAutomate}
                   onChange={(e) => handleInputChange("timeToAutomate", e.target.value)}
                 />
@@ -173,14 +173,14 @@ function Calculator() {
 
           <div className="input-group flex items-center gap-4 mb-4">
             <div className="flex flex-col items-start">
-              <p className="mb-1 text-left font-semibold">In what units do you want to see results?</p>
+                <p className="mb-1 text-left font-semibold">Show results in which unit?</p>
               <div className="flex items-center gap-4">
 
                 <Select
                   onValueChange={(value) => handleInputChange("resultUnit", value as TimeUnit)}
                   value={timeCalculationInput.resultUnit}
                 >
-                  <SelectTrigger className="w-80 border rounded px-2 py-1">
+                  <SelectTrigger className="w-72 border rounded px-2 py-1">
                     <SelectValue placeholder="Unit" />
                   </SelectTrigger>
                   <SelectContent>
@@ -200,7 +200,7 @@ function Calculator() {
       </Card>
 
 
-      <Card className="w-[390px]">
+      <Card className="w-full">
         <CardContent>
           <p className="text-2xl font-semibold">
             {`${savedTimeResult.toLocaleString()} ${timeCalculationInput.resultUnit}`}
@@ -211,7 +211,7 @@ function Calculator() {
         </CardContent>
      </Card>
       
-      <Card className="w-[390px]">
+      <Card className="w-full">
         <CardContent>
           <p className="text-2xl font-semibold">
             {`${breakEvenTime} ${timeCalculationInput.frequencyUnit}`}
