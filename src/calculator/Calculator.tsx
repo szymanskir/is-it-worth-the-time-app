@@ -19,6 +19,7 @@ function Calculator() {
 
   const [savedTimeResult, setSavedTimeResult] = useState<number>(0);
   const [breakEvenTime, setBreakEvenTime] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -27,8 +28,10 @@ function Calculator() {
 
       const breakEven = calculateBreakEvenTime(timeCalculationInput);
       setBreakEvenTime(breakEven);
+      setError(false)
     } catch (error) {
       console.log(error);
+      setError(true);
     }
   }, [timeCalculationInput]);
 
@@ -173,7 +176,7 @@ function Calculator() {
 
           <div className="input-group flex items-center gap-4 mb-4">
             <div className="flex flex-col items-start">
-                <p className="mb-1 text-left font-semibold">Show results in which unit?</p>
+              <p className="mb-1 text-left font-semibold">Show results in which unit?</p>
               <div className="flex items-center gap-4">
 
                 <Select
@@ -200,18 +203,29 @@ function Calculator() {
       </Card>
 
 
-      <Card className="w-full">
-        <CardContent>
-          <p className="text-2xl font-semibold">
-            {`${savedTimeResult.toLocaleString()} ${timeCalculationInput.resultUnit}`}
-          </p>
-          <p className="text-gray-500 mt-1">
-            saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s)
-          </p>
-        </CardContent>
-     </Card>
-      
-      <Card className="w-full">
+      {error ? (
+        <Card className="w-full h-[110px]">
+          <CardContent>
+            <p className="text-xl text-red-500 mt-1">
+              It's not possible to do a {timeCalculationInput.taskDuration} {timeCalculationInput.taskDurationUnit} task {timeCalculationInput.frequencyValue} times per {timeCalculationInput.frequencyUnit}
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="w-full">
+          <CardContent>
+            <p className="text-2xl font-semibold">
+              {`${savedTimeResult.toLocaleString()} ${timeCalculationInput.resultUnit}`}
+            </p>
+            <p className="text-gray-500 mt-1">
+              saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s)
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+
+      <Card className={"w-full " + (error ? "invisible" : "visible")} >
         <CardContent>
           <p className="text-2xl font-semibold">
             {`${breakEvenTime} ${timeCalculationInput.frequencyUnit}`}
@@ -220,8 +234,8 @@ function Calculator() {
             for time investment to break even
           </p>
         </CardContent>
-      </Card> 
-      
+      </Card>
+
     </div>
   );
 }
