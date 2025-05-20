@@ -207,7 +207,7 @@ function Calculator() {
         <Card className="w-full h-[110px]">
           <CardContent>
             <p className="text-xl text-red-500 mt-1">
-              It's not possible to do a {timeCalculationInput.taskDuration} {timeCalculationInput.taskDurationUnit} task {timeCalculationInput.frequencyValue} times per {timeCalculationInput.frequencyUnit}
+              It's not possible to do a {timeCalculationInput.taskDuration} {timeCalculationInput.taskDurationUnit.slice(0, -1)} task {timeCalculationInput.frequencyValue} times per {timeCalculationInput.frequencyUnit.slice(0, -1)}
             </p>
           </CardContent>
         </Card>
