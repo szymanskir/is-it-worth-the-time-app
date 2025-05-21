@@ -14,7 +14,7 @@ describe('calculatePotentialSavedTime', () => {
         horizonValue | horizonUnit      | frequencyValue | frequencyUnit      | taskDuration | taskDurationUnit    | expected             | resultUnit
         ${1}         | ${TimeUnit.Day}  | ${1}           | ${TimeUnit.Day}    | ${0}         | ${TimeUnit.Minute}  | ${0}                 | ${TimeUnit.Second}
         ${1}         | ${TimeUnit.Day}  | ${1}           | ${TimeUnit.Day}    | ${30}        | ${TimeUnit.Second}  | ${30}                | ${TimeUnit.Second}
-        ${1}         | ${TimeUnit.Day}  | ${1}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Minute}  | ${60}                | ${TimeUnit.Second}
+        ${1}         | ${TimeUnit.Day}  | ${1}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Minute}  | ${1}                 | ${TimeUnit.Minute}
         ${5}         | ${TimeUnit.Day}  | ${1}           | ${TimeUnit.Day}    | ${1}         | ${TimeUnit.Minute}  | ${300}               | ${TimeUnit.Second}
         ${14}        | ${TimeUnit.Day}  | ${2}           | ${TimeUnit.Week}   | ${1}         | ${TimeUnit.Minute}  | ${240}               | ${TimeUnit.Second}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${1}         | ${TimeUnit.Second}  | ${5}                 | ${TimeUnit.Second}
@@ -81,11 +81,11 @@ describe('calculatePotentialSavedTime', () => {
 
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Month}  | ${1}         | ${TimeUnit.Day}     | ${8}                 | ${TimeUnit.Week}
         ${5}         | ${TimeUnit.Year} | ${1}           | ${TimeUnit.Year}   | ${1}         | ${TimeUnit.Day}     | ${5}                 | ${TimeUnit.Day}
-    `(`should return $expected $expectedUnit for a $taskDuration $taskDurationUnit 
+    `(`should return $expected $resultUnit for a $taskDuration $taskDurationUnit 
         task done $frequencyValue per $frequencyUnit for $horizonValue $horizonUnit`, (calculationScenario: CalculationScenario) => {
         const { expected, ...calculationInput } = calculationScenario;
         const result = calculatePotentialSavedTime(calculationInput);
-        expect(result).toBe(expected);
+        expect(result[0]).toBe(expected);
     });
 
     it("should throw an error if the task duration and frequency are impossible", () => {

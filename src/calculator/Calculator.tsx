@@ -17,7 +17,7 @@ function Calculator() {
     timeToAutomateUnit: TimeUnit.Hour,
   });
 
-  const [savedTimeResult, setSavedTimeResult] = useState<number>(0);
+  const [savedTimeResult, setSavedTimeResult] = useState<[number, TimeUnit]>([0, TimeUnit.Second]);
   const [breakEvenTime, setBreakEvenTime] = useState<number>(0);
 
   useEffect(() => {
@@ -203,7 +203,7 @@ function Calculator() {
       <Card className="w-full">
         <CardContent>
           <p className="text-2xl font-semibold">
-            {`${savedTimeResult.toLocaleString()} ${timeCalculationInput.resultUnit}`}
+            {`${Number(savedTimeResult[0].toFixed(2)).toLocaleString()} ${savedTimeResult[1]}`}
           </p>
           <p className="text-gray-500 mt-1">
             saved over {timeCalculationInput.horizonValue} {timeCalculationInput.horizonUnit}(s)
